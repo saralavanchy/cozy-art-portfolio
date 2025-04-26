@@ -3,7 +3,11 @@ import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import '../magical-button.css';
 import '../sparkle.css';
 
-export default function About({ setScreen }) {
+interface AboutProps {
+  setScreen: React.Dispatch<React.SetStateAction<'menu' | 'quests' | 'inventory' | 'about'>>;
+}
+
+export default function About({ setScreen }: AboutProps): React.ReactNode {
   return (
     <div className="relative w-full max-w-2xl mx-auto mt-12 animate-fade-in flex flex-col items-center">
       {/* Magical blurred background accents */}
@@ -38,7 +42,7 @@ export default function About({ setScreen }) {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 mt-6 w-full justify-center" style={{position: 'relative', zIndex: 2}}>
           <div style={{position:'relative', display:'inline-block'}}>
-            <button onClick={() => setScreen && setScreen('inventory')} className="flex flex-row rounded-xl items-center gap-2 px-16 py-4 text-lg sm:text-xl font-[Quicksand,Poppins,sans-serif] font-extrabold transition-all duration-300 focus:outline-none text-center leading-none magical-btn magical-btn-readable" style={{ display: 'flex', background: '#FFE066', color: '#8C5C2E', border: '4px solid #8C5C2E', boxShadow: '0 4px 24px 0 rgba(255,224,102,0.18)', minWidth: '12rem', minHeight: '3.5rem'}}>
+            <button onClick={() => setScreen('inventory')} className="flex flex-row rounded-xl items-center gap-2 px-16 py-4 text-lg sm:text-xl font-[Quicksand,Poppins,sans-serif] font-extrabold transition-all duration-300 focus:outline-none text-center leading-none magical-btn magical-btn-readable" style={{ display: 'flex', background: '#FFE066', color: '#8C5C2E', border: '4px solid #8C5C2E', boxShadow: '0 4px 24px 0 rgba(255,224,102,0.18)', minWidth: '12rem', minHeight: '3.5rem'}}>
               <span className="font-extrabold w-full text-center">View My Art</span>
             </button>
             <div className="sparkle-container">

@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BackButton from './BackButton';
 
-const quests = [
+// Define the type for a quest
+interface Quest {
+  title: string;
+  status: string;
+  description: string;
+  details: string;
+  icon: string;
+}
+
+// Props for QuestLog
+interface QuestLogProps {
+  setScreen: React.Dispatch<React.SetStateAction<'menu' | 'quests' | 'inventory' | 'about'>>;
+}
+
+const quests: Quest[] = [
   {
     title: 'Quest Log',
     status: 'Coming Soon',
@@ -11,8 +25,8 @@ const quests = [
   },
 ];
 
-export default function QuestLog({ setScreen }) {
-  const [expanded, setExpanded] = React.useState(null);
+export default function QuestLog({ setScreen }: QuestLogProps) {
+  const [expanded, setExpanded] = useState<number | null>(null);
   return (
     <div className="relative w-full max-w-2xl mx-auto mt-12 animate-fade-in flex flex-col items-center">
       {/* Magical blurred background accents */}
@@ -50,7 +64,6 @@ export default function QuestLog({ setScreen }) {
           ))}
         </div>
       </div>
-      {/* Back button after card, About style */}
       <BackButton onClick={() => setScreen('menu')} />
     </div>
   );

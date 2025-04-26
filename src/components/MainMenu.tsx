@@ -2,7 +2,7 @@ import React from 'react';
 import { Tooltip } from './Tooltip';
 
 interface MainMenuProps {
-  setScreen: (screen: string) => void;
+  setScreen: (screen: 'menu' | 'quests' | 'inventory' | 'about') => void;
 }
 
 function MainMenu({ setScreen }: MainMenuProps) {

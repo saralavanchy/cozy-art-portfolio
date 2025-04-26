@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 
-export default function BackButton({ onClick }) {
+interface BackButtonProps {
+  onClick: () => void;
+}
+
+export default function BackButton({ onClick }: BackButtonProps): ReactNode {
   return (
     <div className="w-full flex mt-8 justify-start">
       <button

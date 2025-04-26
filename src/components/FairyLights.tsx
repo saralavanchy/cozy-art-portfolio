@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 
 interface FairyLight {
   x: number;
@@ -12,17 +12,15 @@ interface FairyLight {
 const FAIRY_COUNT = 18;
 const COLORS = ['#FFE8A3', '#FFD580', '#FFF2CC']; // Cozy, warm yellows
 
-function randomBetween(a: number, b: number) {
+function randomBetween(a: number, b: number): number {
   return a + Math.random() * (b - a);
 }
 
-function FairyLights() {
-  console.log('FairyLights component rendered');
+function FairyLights(): ReactNode {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fairyLights = useRef<FairyLight[]>([]);
 
   useEffect(() => {
-    console.log('FairyLights useEffect running');
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -46,7 +44,8 @@ function FairyLights() {
 
     fairyLights.current = Array.from({ length: FAIRY_COUNT }, () => createFairy());
 
-    function animate() {
+    function animate(): void {
+      if(!ctx) return;
       ctx.clearRect(0, 0, width, height);
       fairyLights.current.forEach((fairy, i) => {
         // Animate upward
@@ -60,10 +59,10 @@ function FairyLights() {
         // Draw glowing circle
         ctx.save();
         ctx.globalAlpha = fairy.alpha;
-        ctx.beginPath();
-        ctx.arc(fairy.x, fairy.y, fairy.radius, 0, Math.PI * 2);
         ctx.shadowColor = COLORS[i % COLORS.length];
         ctx.shadowBlur = fairy.glow;
+        ctx.beginPath();
+        ctx.arc(fairy.x, fairy.y, fairy.radius, 0, 2 * Math.PI);
         ctx.fillStyle = COLORS[i % COLORS.length];
         ctx.fill();
         ctx.restore();
@@ -73,11 +72,13 @@ function FairyLights() {
 
     animate();
 
-    function handleResize() {
+    function handleResize(): void {
+      if(!canvas) return;
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = width;
       canvas.height = height;
+      fairyLights.current = Array.from({ length: FAIRY_COUNT }, () => createFairy());
     }
     window.addEventListener('resize', handleResize);
     return () => {
@@ -90,13 +91,17 @@ function FairyLights() {
       ref={canvasRef}
       style={{
         position: 'fixed',
-        left: 0,
         top: 0,
+        left: 0,
         width: '100vw',
         height: '100vh',
         pointerEvents: 'none',
-        zIndex: 0
+        zIndex: 20,
       }}
+      width={window.innerWidth}
+      height={window.innerHeight}
+      aria-hidden="true"
+      tabIndex={-1}
     />
   );
 }

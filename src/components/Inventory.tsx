@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import '../magical-button.css';
 import BackButton from './BackButton';
 
-const items = [
+// Define the type for an inventory item
+interface InventoryItem {
+  name: string;
+  icon: string;
+  img?: string;
+  description: string;
+  fullDescription?: string;
+  lore: string;
+}
+
+// Props for Inventory
+interface InventoryProps {
+  setScreen: React.Dispatch<React.SetStateAction<'menu' | 'quests' | 'inventory' | 'about'>>;
+}
+
+const items: InventoryItem[] = [
   {
     name: 'Art Time',
     icon: '⏳',
@@ -51,33 +66,33 @@ const items = [
   },
 ];
 
-export default function Inventory({ setScreen }) {
-  const [selected, setSelected] = React.useState(null);
-  const scrollRef = React.useRef(null);
-
-  // For touch drag/swipe
-  const [dragStartX, setDragStartX] = React.useState(null);
-  const [scrollLeftStart, setScrollLeftStart] = React.useState(0);
+export default function Inventory({ setScreen }: InventoryProps) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [dragStartX, setDragStartX] = useState<number | null>(null);
+  const [scrollLeftStart, setScrollLeftStart] = useState(0);
 
   // Arrow handlers
-  const scrollByCard = (dir) => {
+  const scrollByCard = (dir: number) => {
     const container = scrollRef.current;
     if (!container) return;
-    const card = container.querySelector('.gallery-card');
+    const card = container.querySelector('.gallery-card') as HTMLDivElement | null;
     if (!card) return;
     const cardWidth = card.offsetWidth + 32; // gap-8 = 2rem = 32px
     container.scrollBy({ left: dir * cardWidth, behavior: 'smooth' });
   };
 
   // Touch handlers
-  const onTouchStart = (e) => {
+  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     setDragStartX(e.touches[0].clientX);
-    setScrollLeftStart(scrollRef.current.scrollLeft);
+    setScrollLeftStart(scrollRef.current?.scrollLeft ?? 0);
   };
-  const onTouchMove = (e) => {
+  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     if (dragStartX === null) return;
     const dx = dragStartX - e.touches[0].clientX;
-    scrollRef.current.scrollLeft = scrollLeftStart + dx;
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollLeftStart + dx;
+    }
   };
   const onTouchEnd = () => setDragStartX(null);
 
@@ -91,7 +106,7 @@ export default function Inventory({ setScreen }) {
         {/* Background overlay only */}
         <span style={{position: 'absolute', inset: 0, background: 'rgba(40,24,8,0.55)', zIndex: 1, borderRadius: 'inherit', pointerEvents: 'none'}} />
         <h2 className="text-5xl sm:text-6xl font-[Quicksand,Poppins,sans-serif] text-[#FFE066] drop-shadow font-bold mb-10 flex items-center gap-5" style={{position: 'relative', zIndex: 2}}>
-       <span className="text-3xl sm:text-4xl">🖌️</span> Inventory
+         <span className="text-3xl sm:text-4xl">🖌️</span> Inventory
         </h2>
         {/* Minimal horizontal scrollable gallery, no arrows */}
         <div className="relative w-full z-10">
@@ -143,8 +158,8 @@ export default function Inventory({ setScreen }) {
                   &times;
                 </button>
                 <img
-                  src={items[selected].img}
-                  alt={items[selected].name}
+                  src={selected !== null ? items[selected].img : ''}
+                  alt={selected !== null ? items[selected].name : ''}
                   className="max-w-[80vw] max-h-[75vh] object-contain rounded-xl w-full"
                   style={{ zIndex: 1 }}
                 />
@@ -152,10 +167,10 @@ export default function Inventory({ setScreen }) {
               {/* Overlayed text OUTSIDE the modal, below the image frame, exactly matching modal width */}
               <div className="flex flex-col items-center justify-center mt-4 px-4 w-full">
                 <div className="bg-[#fffbe6]/80 rounded-xl border border-[#C2A13C] shadow-lg px-8 py-6 text-center backdrop-blur-sm">
-                  <h3 className="font-[Quicksand,Poppins,sans-serif] text-4xl mb-2 text-[#8C5C2E] font-bold drop-shadow">{items[selected].name}</h3>
-                  <p className="text-[#8C5C2E] mb-2 text-lg drop-shadow">{items[selected].fullDescription || items[selected].description}</p>
+                  <h3 className="font-[Quicksand,Poppins,sans-serif] text-4xl mb-2 text-[#8C5C2E] font-bold drop-shadow">{selected !== null ? items[selected].name : ''}</h3>
+                  <p className="text-[#8C5C2E] mb-2 text-lg drop-shadow">{selected !== null ? (items[selected].fullDescription || items[selected].description) : ''}</p>
                   <div className="bg-white bg-opacity-70 rounded p-4 text-base text-gray-700 border border-[#C2A13C] mt-2">
-                    {items[selected].lore}
+                    {selected !== null ? items[selected].lore : ''}
                   </div>
                 </div>
               </div>
