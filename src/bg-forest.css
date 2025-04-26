@@ -1,0 +1,17 @@
+.bg-forest {
+  background-image: url('./assets/textures/forest.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.btn-modern {
+  transition: all 0.2s cubic-bezier(.4,0,.2,1);
+}
+.btn-modern:hover,
+.btn-modern:focus {
+  background: #FFE066 !important;
+  color: #8C5C2E !important;
+  border-color: #C2A13C !important;
+  box-shadow: 0 4px 24px 0 rgba(255, 224, 102, 0.18) !important;
+}

@@ -1,0 +1,67 @@
+/* Magical animated button for View My Art & Contact Me */
+/* === Original magical button (About section) === */
+.magical-btn {
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.25s, transform 0.22s cubic-bezier(.4,0,.2,1);
+}
+.magical-btn::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(circle at center, #fffbe6 0%, #ffe066 40%, rgba(255,224,102,0.0) 70%);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+  transition: opacity 0.32s, transform 0.32s;
+  pointer-events: none;
+  z-index: 1;
+}
+.magical-btn:hover::before, .magical-btn:focus::before, .magical-btn:active::before {
+  opacity: 0.8;
+  background: radial-gradient(circle at center, #fffbe6 0%, #ffe066 40%, rgba(255,224,102,0.0) 70%);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+.magical-btn:hover, .magical-btn:focus, .magical-btn:active, .magical-btn:focus:active {
+  box-shadow: 0 0 32px 0 #ffe066, 0 4px 24px 0 rgba(255,224,102,0.18);
+  transform: scale(1.04) rotate(-1deg);
+}
+
+/* Improved text readability on magical hover */
+.magical-btn-readable:hover, .magical-btn-readable:focus, .magical-btn-readable:active, .magical-btn-readable:focus:active {
+  color: #7a4c18 !important;
+  text-shadow: 0 2px 8px #fffbe6, 0 1px 0 #fff;
+  z-index: 2;
+}
+.magical-btn-readable span {
+  position: relative;
+  z-index: 2;
+}
+
+/* === Darker magical button (Main Menu) === */
+.magical-btn-dark {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.22s cubic-bezier(.4,0,.2,1), background 0.22s, border 0.22s;
+}
+.magical-btn-dark:hover, .magical-btn-dark:focus, .magical-btn-dark:active, .magical-btn-dark:focus:active {
+  color: #a06a00 !important;
+  background: #fffbe6;
+  border-color: #a06a00;
+  box-shadow: none;
+  text-shadow: none;
+}
+.magical-btn-dark::before, .magical-btn-dark:hover::before, .magical-btn-dark:focus::before, .magical-btn-dark:active::before {
+  display: none !important;
+}
+
+/* More normal hover for Back button */
+.back-btn {
+  transition: box-shadow 0.2s, transform 0.18s;
+}
+.back-btn:hover, .back-btn:focus {
+  box-shadow: 0 8px 32px 0 #ffe066, 0 4px 24px 0 rgba(255,224,102,0.18);
+  transform: scale(1.04);
+}
