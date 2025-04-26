@@ -7,6 +7,8 @@ interface AboutProps {
   setScreen: React.Dispatch<React.SetStateAction<'menu' | 'quests' | 'inventory' | 'about'>>;
 }
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function About({ setScreen }: AboutProps): React.ReactNode {
   return (
     <div className="relative w-full max-w-2xl mx-auto mt-12 animate-fade-in flex flex-col items-center">
@@ -14,7 +16,7 @@ export default function About({ setScreen }: AboutProps): React.ReactNode {
       <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-96 h-32 bg-gradient-to-r from-[#F6D365]/30 via-[#B7D7B0]/40 to-[#F7CAC9]/20 blur-3xl rounded-full opacity-60 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-52 h-32 bg-gradient-to-br from-[#F6D365]/30 to-[#B7D7B0]/10 blur-2xl rounded-full opacity-50 pointer-events-none" />
       {/* Wood card background and palette update */}
-      <div className="relative z-10 w-full rounded-2xl border border-[#8C5C2E] shadow-xl p-10 flex flex-col items-center bg-wood-card overflow-hidden" style={{background: 'url(/assets/wood-seamless.jpg) center/cover repeat'}}>
+      <div className="relative z-10 w-full rounded-2xl border border-[#8C5C2E] shadow-xl p-10 flex flex-col items-center bg-wood-card overflow-hidden" style={{background: `url(${BASE}assets/wood-seamless.png) center/cover repeat`}}>
         <span style={{position: 'absolute', inset: 0, background: 'rgba(40,24,8,0.55)', zIndex: 1, borderRadius: 'inherit'}} />
         <div className="flex flex-col items-center mb-6" style={{position: 'relative', zIndex: 2}}>
           <h2 className="text-4xl sm:text-5xl font-[Quicksand,Poppins,sans-serif] text-[#FFE066] drop-shadow font-bold mb-1 flex items-center gap-3">
